@@ -23,10 +23,14 @@
     height: 45%;
     position: relative;
     top: 270px;
+    left: 656px;
     margin: 0px auto;
     color: white;
     border: 1px solid greenyellow;
     border-radius: 50px;
+}
+.screen .btn {
+    color: white;
 }
 .footer {
     font-family: 'Roboto', sans-serif;
