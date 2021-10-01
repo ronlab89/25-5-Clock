@@ -19,6 +19,14 @@
 }
 .screen {
     font-family: 'Noto Sans Display', sans-serif;
+    width: 22%;
+    height: 45%;
+    position: relative;
+    top: 270px;
+    margin: 0px auto;
+    color: white;
+    border: 1px solid greenyellow;
+    border-radius: 50px;
 }
 .footer {
     font-family: 'Roboto', sans-serif;

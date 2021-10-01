@@ -12,7 +12,9 @@ function App() {
           <img src={Logo} alt="Logo-personal" className="img-fluid" width="70"></img>
         </div>
         <section className="watch">
-          <div className="screen"></div>  
+          <div className="screen p-2">
+            <h2>reloj</h2>
+          </div>  
         </section>
         <div className="footer row">
           <h1 className="col-6 text-start ps-5">25 + 5 Clock</h1>
