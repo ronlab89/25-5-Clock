@@ -1,3 +1,11 @@
+:root {
+    --yellow: #ffc43d;
+    --green: #06d6a0;
+    --blue: #1b9aaa;
+    --red: #ef476f;
+    --white: #eff7f6;  
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Display:wght@100;300;500;700&display=swap');
 
@@ -26,11 +34,47 @@
     left: 656px;
     margin: 0px auto;
     color: white;
-    border: 1px solid greenyellow;
+    border: none;
     border-radius: 50px;
+}
+#timer-label {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--yellow);
+}
+#time-left {
+    margin-top: -10px;
+    padding-top: 0px;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--white);
+}
+.green {
+    color: var(--green) !important;
+}
+.blue {
+    color: var(--blue) !important;
+}
+.red {
+    color: var(--red) !important;
 }
 .screen .btn {
     color: white;
+    font-size: 1.2rem;
+}
+.btn:focus {
+    box-shadow: none !important;
+}
+.screen .btn:hover {
+    color: whitesmoke;
+}
+#break-length, #session-length {
+    color: var(--white);
+}
+#break-label, #session-label {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--yellow);
 }
 .footer {
     font-family: 'Roboto', sans-serif;

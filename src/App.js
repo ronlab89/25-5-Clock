@@ -11,6 +11,35 @@ const {useState, useEffect} = React;
 function App() {
 
   const [breakLength, setBreakLength] = useState('5');
+  const [sessionLength, setSessionLength] = useState('25');
+  const [time, setTime] = useState('25:00');
+
+  const onReset = (e) => {
+    e.preventDefault();
+    setTime('25:00');
+    setBreakLength('5');
+    setSessionLength('25');
+  }
+
+  const decrementBreak = (e) => {
+    e.preventDefault();
+    console.log('Decrement Break');
+  }
+
+  const incrementBreak = (e) => {
+    e.preventDefault();
+    console.log('Increment Break');
+  }
+
+  const decrementSession = (e) => {
+    e.preventDefault();
+    console.log('Decrement Session');
+  }
+
+  const incrementSession = (e) => {
+    e.preventDefault();
+    console.log('Increment Session');
+  }
 
   return (
     <div className="App">
@@ -19,7 +48,16 @@ function App() {
           <img src={Logo} alt="Logo-personal" className="img-fluid" width="70"></img>
         </div>
         <section className="watch">
-          <Display breakLength={breakLength}/>
+          <Display 
+            meddle={breakLength}
+            session={sessionLength}
+            reset={onReset}
+            time={time}
+            dBreak={decrementBreak}
+            iBreak={incrementBreak}
+            dSession={decrementSession}
+            iSession={incrementSession}
+            />
         </section>
         <div className="footer row">
           <h1 className="col-6 text-start ps-5">25 + 5 Clock</h1>
