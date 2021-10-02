@@ -10,35 +10,55 @@ const {useState, useEffect} = React;
 
 function App() {
 
-  const [breakLength, setBreakLength] = useState('5');
-  const [sessionLength, setSessionLength] = useState('25');
-  const [time, setTime] = useState('25:00');
+  const [breakLength, setBreakLength] = useState(5);
+  const [sessionLength, setSessionLength] = useState(25);
+  const [time, setTime] = useState(1500);
+  let [timeMinutes, setTimeMinutes] = useState(25);
+  let [timeSeconds, setTimeSeconds] = useState('00');
+
+  const timerClock = () => {
+    setTimeMinutes((Math.floor(time / 60)) < 10 ? '0' + (Math.floor(time / 60)) : (Math.floor(time / 60)));
+    setTimeSeconds((Math.floor(time - timeMinutes * 60)) < 10 ? '0' + (Math.floor(time - timeMinutes * 60)) : (Math.floor(time - timeMinutes *
+      60)));
+    return `${timeMinutes}:${timeSeconds}`;
+  }
+
+  // la const time lo pongo a decrementar cada 1000 ms con un setTime
 
   const onReset = (e) => {
     e.preventDefault();
-    setTime('25:00');
-    setBreakLength('5');
-    setSessionLength('25');
+    setTime(1500);
+    setBreakLength(5);
+    setSessionLength(25);
   }
 
   const decrementBreak = (e) => {
     e.preventDefault();
-    console.log('Decrement Break');
+    if(breakLength >= 2 && breakLength <= 60) {
+      setBreakLength((prev) => prev - 1);
+    }
   }
 
   const incrementBreak = (e) => {
     e.preventDefault();
-    console.log('Increment Break');
+    if(breakLength >= 1 && breakLength < 60) {
+      setBreakLength((prev) => prev + 1);
+    }
   }
 
   const decrementSession = (e) => {
     e.preventDefault();
-    console.log('Decrement Session');
+    if(sessionLength >= 2 && sessionLength <= 60) {
+      setSessionLength((prev) => prev - 1);
+      setTimeMinutes((prev) => prev - 1);
+    }
   }
 
   const incrementSession = (e) => {
     e.preventDefault();
-    console.log('Increment Session');
+    if(sessionLength >= 1 && sessionLength < 60) {
+      setSessionLength((prev) => prev + 1);
+    }
   }
 
   return (
@@ -52,7 +72,7 @@ function App() {
             meddle={breakLength}
             session={sessionLength}
             reset={onReset}
-            time={time}
+            time={timerClock}
             dBreak={decrementBreak}
             iBreak={incrementBreak}
             dSession={decrementSession}

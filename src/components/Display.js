@@ -4,14 +4,13 @@ import { faPlay, faPause, faPowerOff, faPlusCircle, faMinusCircle } from '@forta
 // UndoAlt icono de repeat
 
 const Display = (props) => {
-
-    console.log(props);
+    
     const {meddle, session, reset, time, dBreak, iBreak, dSession, iSession} = props;
 
     return (
         <div className="screen row g-0 p-2">
             <div id="timer-label" className="col-12">session</div>
-            <div id="time-left" className="col-12">{time}</div>
+            <div id="time-left" className="col-12">{time()}</div>
             <div className="col-12">
                 <div className="row g-0 control">
                     <div id="start_stop" className="col-8">
