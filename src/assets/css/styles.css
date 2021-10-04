@@ -90,3 +90,18 @@
 .footer p {
     font-size: 1.2rem;
 }
+
+/* Media Queries */
+@media (max-width: 970px) {
+   .screen {
+        width: 20%;
+        height: 32%;
+        position: relative;
+        top: 320px;
+        left: 380px;
+        margin: 0px auto;
+        color: white;
+        border: none;
+        border-radius: 50px;
+    } 
+}

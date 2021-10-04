@@ -13,14 +13,13 @@ function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
   const [time, setTime] = useState(1500);
-  let [timeMinutes, setTimeMinutes] = useState(25);
-  let [timeSeconds, setTimeSeconds] = useState('00');
+  const [timeMinutes, setTimeMinutes] = useState();
+  const [timeSeconds, setTimeSeconds] = useState();
 
   const timerClock = () => {
     setTimeMinutes((Math.floor(time / 60)) < 10 ? '0' + (Math.floor(time / 60)) : (Math.floor(time / 60)));
     setTimeSeconds((Math.floor(time - timeMinutes * 60)) < 10 ? '0' + (Math.floor(time - timeMinutes * 60)) : (Math.floor(time - timeMinutes *
       60)));
-    return `${timeMinutes}:${timeSeconds}`;
   }
 
   // la const time lo pongo a decrementar cada 1000 ms con un setTime
@@ -28,6 +27,8 @@ function App() {
   const onReset = (e) => {
     e.preventDefault();
     setTime(1500);
+    setTimeMinutes(25);
+    setTimeSeconds('00');
     setBreakLength(5);
     setSessionLength(25);
   }
@@ -58,8 +59,21 @@ function App() {
     e.preventDefault();
     if(sessionLength >= 1 && sessionLength < 60) {
       setSessionLength((prev) => prev + 1);
+      setTimeMinutes((prev) => prev + 1);
     }
   }
+
+  const playTime = (e) => {
+    e.preventDefault();
+    console.log('funcionando el Play');
+    setInterval(() => {
+      setTimeMinutes(prev => prev -1);
+    }, 1000);
+  }
+
+  useEffect(() => {
+    timerClock();
+  }, [])
 
   return (
     <div className="App">
@@ -72,11 +86,13 @@ function App() {
             meddle={breakLength}
             session={sessionLength}
             reset={onReset}
-            time={timerClock}
+            timeMinutes={timeMinutes}
+            timeSeconds={timeSeconds}
             dBreak={decrementBreak}
             iBreak={incrementBreak}
             dSession={decrementSession}
             iSession={incrementSession}
+            play={playTime}
             />
         </section>
         <div className="footer row">
