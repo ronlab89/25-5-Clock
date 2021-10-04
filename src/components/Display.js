@@ -4,9 +4,9 @@ import { faPlay, faPause, faPowerOff, faPlusCircle, faMinusCircle } from '@forta
 // UndoAlt icono de repeat
 
 const Display = (props) => {
-    console.log(props);
+    // console.log(props);
     
-    const {meddle, session, reset, timeMinutes, timeSeconds, dBreak, iBreak, dSession, iSession, play} = props;
+    const {meddle, session, reset, timeMinutes, timeSeconds, dBreak, iBreak, dSession, iSession, play, pause} = props;
 
     return (
         <div className="screen row g-0 p-2">
@@ -18,7 +18,7 @@ const Display = (props) => {
                     <button className="btn col-6 green" onClick={play}>
                         <FontAwesomeIcon icon={faPlay} />
                     </button>
-                    <button className="btn col-6 blue">
+                    <button className="btn col-6 blue" onClick={pause}>
                         <FontAwesomeIcon icon={faPause} />
                     </button>
                     </div>

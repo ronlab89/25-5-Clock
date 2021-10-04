@@ -13,8 +13,9 @@ function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
   const [time, setTime] = useState(1500);
-  const [timeMinutes, setTimeMinutes] = useState();
-  const [timeSeconds, setTimeSeconds] = useState();
+  const [timeMinutes, setTimeMinutes] = useState('25');
+  const [timeSeconds, setTimeSeconds] = useState('00');
+  const [decreTime, setDecreTime] = useState();
 
   const timerClock = () => {
     setTimeMinutes((Math.floor(time / 60)) < 10 ? '0' + (Math.floor(time / 60)) : (Math.floor(time / 60)));
@@ -65,10 +66,25 @@ function App() {
 
   const playTime = (e) => {
     e.preventDefault();
-    console.log('funcionando el Play');
-    setInterval(() => {
-      setTimeMinutes(prev => prev -1);
-    }, 1000);
+    if (timeSeconds === '00') {
+      setTimeSeconds('12');
+      console.log(timeSeconds);
+      setDecreTime(
+        setInterval( () => {
+          setTimeSeconds(prev => (prev - 1) === '9' ? '0' + (prev - 1) : (prev - 1));
+          console.log(timeSeconds);
+          if (timeSeconds === '01'){
+            setTimeMinutes(prev => prev -1);
+            setTimeSeconds('00');
+          }
+        }, 1000));
+    }
+  }
+
+  const pauseTime = (e) => {
+    e.preventDefault();
+    console.log('Funcionando Pause');
+    clearInterval(decreTime);
   }
 
   useEffect(() => {
@@ -93,6 +109,7 @@ function App() {
             dSession={decrementSession}
             iSession={incrementSession}
             play={playTime}
+            pause={pauseTime}
             />
         </section>
         <div className="footer row">
