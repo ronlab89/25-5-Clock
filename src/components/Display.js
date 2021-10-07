@@ -5,7 +5,7 @@ import { faPlay, faPause, faPowerOff, faPlusCircle, faMinusCircle } from '@forta
 const Display = (props) => {
     console.log(props);
     
-    const {meddle, session, reset, time, timeDisplay, dBreak, iBreak, dSession, iSession, play, pause} = props;
+    const {meddle, session, reset, time, timeDisplay, dBreak, iBreak, dSession, iSession, play} = props;
 
     return (
         <div className="screen row g-0 p-2">
@@ -13,11 +13,11 @@ const Display = (props) => {
             <div id="time-left" className="col-12">{time(timeDisplay)}</div>
             <div className="col-12">
                 <div className="row g-0 control">
-                    <div id="start_stop" className="col-8">
-                    <button className="btn col-6 green" onClick={play}>
+                    <div id="start_stop" className="col-8" onClick={play}>
+                    <button className="btn col-6 green">
                         <FontAwesomeIcon icon={faPlay} />
                     </button>
-                    <button className="btn col-6 blue" onClick={pause}>
+                    <button className="btn col-6 blue">
                         <FontAwesomeIcon icon={faPause} />
                     </button>
                     </div>

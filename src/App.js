@@ -13,8 +13,8 @@ function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
   const [timeDisplay, setTimeDisplay] = useState(25 * 60);
-  const [decreMinutes, setDecreMinutes] = useState();
-  const [decreSeconds, setDecreSeconds] = useState();
+  const [timerOn, setTimerOn] = useState(false);
+  const [onBreak, setOnBreak] = useState(false);
 
 
   const timerClock = (time) => {
@@ -57,23 +57,27 @@ function App() {
 
   const playTime = (e) => {
     e.preventDefault();
-    
-    /*
-    setDecreMinutes(setInterval(() => {
-      setTimeMinutes(prev => prev -1);
-    }, 6000));
-    setTimeSeconds('16')
-    setDecreSeconds(setInterval( () => {
-      setTimeSeconds((prev => prev - 1) === '9' ? '0' + (prev => prev - 1) : (prev => prev - 1));
-    }, 1000));
-    */
-  }
-
-  const pauseTime = (e) => {
-    e.preventDefault();
-    console.log('Funcionando Pause');
-    clearInterval(decreMinutes);
-    clearInterval(decreSeconds);
+    let second = 1000;
+    let date = new Date().getTime();
+    let nextDate = new Date().getTime() + second;
+    let onBreakVar = onBreak;
+    if(!timerOn) {
+      let interval = setInterval(() => {
+        date = new Date().getTime();
+        if(date > nextDate) {
+          setTimeDisplay(prev => {
+            return prev - 1;
+          })
+          nextDate += second;
+        }
+      }, 30);
+      localStorage.clear();
+      localStorage.setItem('interval-id', interval);
+    }
+    if(timerOn){
+      clearInterval(localStorage.getItem("interval-id"));
+    }
+    setTimerOn(!timerOn);
   }
 
   const onReset = (e) => {
@@ -83,11 +87,6 @@ function App() {
     setSessionLength(25);
   }
 
- /*
-  useEffect(() => {
-    timerClock();
-  }, [])
-*/
   return (
     <div className="App">
       <header className="App-header">
@@ -99,8 +98,6 @@ function App() {
             meddle={breakLength}
             session={sessionLength}
             reset={onReset}
-            //timeMinutes={timeMinutes}
-            //timeSeconds={timeSeconds}
             timeDisplay={timeDisplay}
             time={timerClock}
             dBreak={decrementBreak}
@@ -108,7 +105,6 @@ function App() {
             dSession={decrementSession}
             iSession={incrementSession}
             play={playTime}
-            pause={pauseTime}
             />
         </section>
         <div className="footer row">
