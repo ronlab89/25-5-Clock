@@ -6,32 +6,21 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import Logo from './assets/images/logo.png';
 import Display from './components/Display';
 
-const {useState, useEffect} = React;
+const {useState, useEffect, useRef} = React;
 
 function App() {
 
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [time, setTime] = useState(1500);
-  const [timeMinutes, setTimeMinutes] = useState('25');
-  const [timeSeconds, setTimeSeconds] = useState('00');
-  const [decreTime, setDecreTime] = useState();
+  const [timeDisplay, setTimeDisplay] = useState(25 * 60);
+  const [decreMinutes, setDecreMinutes] = useState();
+  const [decreSeconds, setDecreSeconds] = useState();
 
-  const timerClock = () => {
-    setTimeMinutes((Math.floor(time / 60)) < 10 ? '0' + (Math.floor(time / 60)) : (Math.floor(time / 60)));
-    setTimeSeconds((Math.floor(time - timeMinutes * 60)) < 10 ? '0' + (Math.floor(time - timeMinutes * 60)) : (Math.floor(time - timeMinutes *
-      60)));
-  }
 
-  // la const time lo pongo a decrementar cada 1000 ms con un setTime
-
-  const onReset = (e) => {
-    e.preventDefault();
-    setTime(1500);
-    setTimeMinutes(25);
-    setTimeSeconds('00');
-    setBreakLength(5);
-    setSessionLength(25);
+  const timerClock = (time) => {
+    let minutes = Math.floor(time / 60);
+    let seconds = Math.floor(time % 60);
+    return `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
   }
 
   const decrementBreak = (e) => {
@@ -50,47 +39,55 @@ function App() {
 
   const decrementSession = (e) => {
     e.preventDefault();
+    const amount = 60;
     if(sessionLength >= 2 && sessionLength <= 60) {
       setSessionLength((prev) => prev - 1);
-      setTimeMinutes((prev) => prev - 1);
+      setTimeDisplay(prev => prev - amount);
     }
   }
 
   const incrementSession = (e) => {
     e.preventDefault();
+    const amount2 = 60;
     if(sessionLength >= 1 && sessionLength < 60) {
       setSessionLength((prev) => prev + 1);
-      setTimeMinutes((prev) => prev + 1);
+      setTimeDisplay(prev => prev + amount2);
     }
   }
 
   const playTime = (e) => {
     e.preventDefault();
-    if (timeSeconds === '00') {
-      setTimeSeconds('12');
-      console.log(timeSeconds);
-      setDecreTime(
-        setInterval( () => {
-          setTimeSeconds(prev => (prev - 1) === '9' ? '0' + (prev - 1) : (prev - 1));
-          console.log(timeSeconds);
-          if (timeSeconds === '01'){
-            setTimeMinutes(prev => prev -1);
-            setTimeSeconds('00');
-          }
-        }, 1000));
-    }
+    
+    /*
+    setDecreMinutes(setInterval(() => {
+      setTimeMinutes(prev => prev -1);
+    }, 6000));
+    setTimeSeconds('16')
+    setDecreSeconds(setInterval( () => {
+      setTimeSeconds((prev => prev - 1) === '9' ? '0' + (prev => prev - 1) : (prev => prev - 1));
+    }, 1000));
+    */
   }
 
   const pauseTime = (e) => {
     e.preventDefault();
     console.log('Funcionando Pause');
-    clearInterval(decreTime);
+    clearInterval(decreMinutes);
+    clearInterval(decreSeconds);
   }
 
+  const onReset = (e) => {
+    e.preventDefault();
+    setTimeDisplay(25 * 60);
+    setBreakLength(5);
+    setSessionLength(25);
+  }
+
+ /*
   useEffect(() => {
     timerClock();
   }, [])
-
+*/
   return (
     <div className="App">
       <header className="App-header">
@@ -102,8 +99,10 @@ function App() {
             meddle={breakLength}
             session={sessionLength}
             reset={onReset}
-            timeMinutes={timeMinutes}
-            timeSeconds={timeSeconds}
+            //timeMinutes={timeMinutes}
+            //timeSeconds={timeSeconds}
+            timeDisplay={timeDisplay}
+            time={timerClock}
             dBreak={decrementBreak}
             iBreak={incrementBreak}
             dSession={decrementSession}

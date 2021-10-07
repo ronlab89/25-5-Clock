@@ -1,17 +1,16 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause, faPowerOff, faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
-// UndoAlt icono de repeat
 
 const Display = (props) => {
-    // console.log(props);
+    console.log(props);
     
-    const {meddle, session, reset, timeMinutes, timeSeconds, dBreak, iBreak, dSession, iSession, play, pause} = props;
+    const {meddle, session, reset, time, timeDisplay, dBreak, iBreak, dSession, iSession, play, pause} = props;
 
     return (
         <div className="screen row g-0 p-2">
             <div id="timer-label" className="col-12">session</div>
-            <div id="time-left" className="col-12">{timeMinutes}:{timeSeconds}</div>
+            <div id="time-left" className="col-12">{time(timeDisplay)}</div>
             <div className="col-12">
                 <div className="row g-0 control">
                     <div id="start_stop" className="col-8">
