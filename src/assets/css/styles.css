@@ -43,8 +43,8 @@
     color: var(--yellow);
 }
 #time-left {
-    margin-top: -10px;
-    padding-top: 0px;
+    margin-top: 10px;
+    padding-top: 10px;
     font-size: 4rem;
     font-weight: 700;
     color: var(--white);

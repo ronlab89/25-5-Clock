@@ -1,18 +1,18 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faPowerOff, faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faPause, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 
 const Display = (props) => {
     console.log(props);
     
-    const {meddle, session, reset, time, timeDisplay, dBreak, iBreak, dSession, iSession, play} = props;
+    const {reset, time, timeDisplay, play, ifBreak} = props;
 
     return (
-        <div className="screen row g-0 p-2">
-            <div id="timer-label" className="col-12">session</div>
+        <div>
+            <div id="timer-label" className="col-12">{ifBreak ? "Break" : "Session"}</div>
             <div id="time-left" className="col-12">{time(timeDisplay)}</div>
             <div className="col-12">
-                <div className="row g-0 control">
+                <div className="row g-0 control mt-4">
                     <div id="start_stop" className="col-8" onClick={play}>
                     <button className="btn col-6 green">
                         <FontAwesomeIcon icon={faPlay} />
@@ -25,28 +25,6 @@ const Display = (props) => {
                         <FontAwesomeIcon icon={faPowerOff} />
                     </button>
                 </div>
-            </div>
-            <div className="col-6 row g-0 align-content-center">
-                <button id="break-decrement" className="btn col-4 red" onClick={dBreak}>
-                    <FontAwesomeIcon icon={faMinusCircle} />
-                </button>
-                <span id="break-length" className="col-4 break">
-                    {meddle}</span>
-                <button id="break-increment" className="btn col-4 green" onClick={iBreak}>
-                    <FontAwesomeIcon icon={faPlusCircle} />
-                </button>
-                <span id="break-label" className="col-12">Break-lenght</span>
-            </div>
-            <div className="col-6 row g-0 align-content-center">
-                <button id="session-decrement" className="btn col-4 red" onClick={dSession}>
-                    <FontAwesomeIcon icon={faMinusCircle} />
-                </button>
-                <span id="session-length" className="col-4">
-                    {session}</span>
-                <button id="session-increment" className="btn col-4 green" onClick={iSession}>
-                    <FontAwesomeIcon icon={faPlusCircle} />
-                </button>
-                <span id="session-label" className="col-12 session">Session-length</span>
             </div>
         </div>
     );
