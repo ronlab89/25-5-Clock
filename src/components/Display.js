@@ -4,6 +4,7 @@ import { faPlay, faPause, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 
 const Display = (props) => {
     console.log(props);
+    console.log(props.time(25*60));
     
     const {reset, time, timeDisplay, play, ifBreak} = props;
 

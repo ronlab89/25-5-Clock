@@ -8,12 +8,13 @@ import Display from './components/Display';
 import LengthControls from './components/LengthControls';
 import audio from './assets/audio/beep.mp3';
 
+
 const {useState} = React;
 
 function App() {
 
-  const [breakLength, setBreakLength] = useState(5 * 60);
-  const [sessionLength, setSessionLength] = useState(25 * 60);
+  const [breakLength, setBreakLength] = useState(5);
+  const [sessionLength, setSessionLength] = useState(25);
   const [timeDisplay, setTimeDisplay] = useState(25 * 60);
   const [timerOn, setTimerOn] = useState(false);
   const [onBreak, setOnBreak] = useState(false);
@@ -27,23 +28,34 @@ function App() {
 
   const timerClock = (time) => {
     let minutes = Math.floor(time / 60);
-    let seconds = Math.floor(time % 60);
-    return `${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-  }
+    let seconds = time % 60;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds
+    return minutes + ":" + seconds;
+  };
 
-  const changeTime = (amount, type) => {
-    if(type === "break") {
-      if(breakLength <= 60 && amount < 0) {
-        return;
+  const changeTime = (amount, type, newAmount) => {
+    if (type === "break") {
+      if (breakLength >= 2 && breakLength <= 60 && newAmount === -1) {
+        setBreakLength((prev) => prev + newAmount);
       }
-      setBreakLength((prev) => prev + amount);
+      if (breakLength >= 1 && breakLength < 60 && newAmount === 1) {
+        setBreakLength((prev) => prev + newAmount);
+      }
     }else {
-      if(sessionLength <= 60 && amount < 0) {
-        return;
+      if(sessionLength >= 2  && sessionLength <= 60 && newAmount === -1) {
+        setSessionLength((prev) => prev + newAmount);
       }
-      setSessionLength((prev) => prev + amount);
+      if(sessionLength >= 1 && sessionLength < 60 && newAmount === 1) {
+        setSessionLength((prev) => prev + newAmount);
+      }
       if(!timerOn) {
-        setTimeDisplay(sessionLength + amount);
+        if (sessionLength >= 2 && sessionLength <= 60 && amount === -60) {
+          setTimeDisplay((sessionLength * 60) + amount);
+        }
+        if (sessionLength >= 1 && sessionLength < 60 && amount === 60) {
+          setTimeDisplay((sessionLength * 60) + amount);
+        }
       }
     }
   }
@@ -87,8 +99,8 @@ function App() {
   const onReset = (e) => {
     e.preventDefault();
     setTimeDisplay(25 * 60);
-    setBreakLength(5 * 60);
-    setSessionLength(25 * 60);
+    setBreakLength(5);
+    setSessionLength(25);
   }
 
 
@@ -112,6 +124,10 @@ function App() {
           <div className="row g-0">
           <LengthControls 
             title={"Break Length"}
+            idTitle={"break-label"}
+            idDecrement={"break-decrement"}
+            idIncrement={"break-increment"}
+            idLength={"break-length"}
             changeTime={changeTime}
             type={"break"}
             time={breakLength}
@@ -119,6 +135,10 @@ function App() {
             />
             <LengthControls
               title={"Session Length"}
+              idTitle={"session-label"}
+              idDecrement={"session-decrement"}
+              idIncrement={"session-increment"}
+              idLength={"session-length"}
               changeTime={changeTime}
               type={"session"}
               time={sessionLength}

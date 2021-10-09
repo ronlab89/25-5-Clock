@@ -4,19 +4,19 @@ import { faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 const LengthControls = (props) => {
 
-    const { title, changeTime, type, time, formatTime } = props;
+    const { title, idTitle, idDecrement, idIncrement, idLength, changeTime, type, time, formatTime } = props;
 
     return (
         <div className="col-6 row g-0 align-content-center">
-            <button id="break-decrement" className="btn col-4 red" onClick={() => changeTime(-60, type)}>
+            <button id={idDecrement} className="btn col-4 red" onClick={() => changeTime(-60, type, -1)}>
                 <FontAwesomeIcon icon={faMinusCircle} />
             </button>
-            <span id="break-length" className="col-4 break">
-                {formatTime(time)}</span>
-            <button id="break-increment" className="btn col-4 green" onClick={() => changeTime(60, type)}>
+            <span id={idLength} className="col-4 break">
+                {time}</span>
+            <button id={idIncrement} className="btn col-4 green" onClick={() => changeTime(60, type, 1)}>
                 <FontAwesomeIcon icon={faPlusCircle} />
             </button>
-            <span id="break-label" className="col-12">{title}</span>
+            <span id={idTitle} className="col-12">{title}</span>
         </div>
     );
 }
