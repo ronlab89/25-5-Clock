@@ -60,28 +60,31 @@ function App() {
     }
   }
 
-  const playTime = (e) => {
-    e.preventDefault();
+  const playTime = () => {
     let second = 1000;
     let date = new Date().getTime();
     let nextDate = new Date().getTime() + second;
     let onBreakVar = onBreak;
+    console.log(second, date, nextDate, timerOn, onBreak);
     if(!timerOn) {
+      console.log(breakLength, sessionLength);
       let interval = setInterval(() => {
         date = new Date().getTime();
         if(date > nextDate) {
           setTimeDisplay(prev => {
             if(prev <= 0 && !onBreakVar) {
               playAudioBreak();
-              onBreakVar = true;
               setOnBreak(true);
-              return breakLength;
-            }else if(prev <= 0 && onBreakVar) {
-              playAudioBreak();
-              onBreakVar = false;
-              setOnBreak(false);
-              return sessionLength;
+              onBreakVar = true;
+              return breakLength * 60;
             }
+            if(prev <= 0 && onBreakVar) {
+              playAudioBreak();
+              setOnBreak(false);
+              onBreakVar = false;
+              return sessionLength * 60;
+            }
+            
             return prev - 1;
           });
           nextDate += second;
@@ -96,11 +99,14 @@ function App() {
     setTimerOn(!timerOn);
   }
 
-  const onReset = (e) => {
-    e.preventDefault();
+  const onReset = () => {
     setTimeDisplay(25 * 60);
     setBreakLength(5);
     setSessionLength(25);
+    if (playTime()) {
+      clearInterval(localStorage.getItem("interval-id"));
+    }
+    audioBreak.pause();
   }
 
 
@@ -113,13 +119,11 @@ function App() {
         <section className="watch">
         <div className="screen row g-0 p-2">
           <Display 
-            meddle={breakLength}
-            session={sessionLength}
             reset={onReset}
             timeDisplay={timeDisplay}
             time={timerClock}
             play={playTime}
-            ifBreak={onBreak}
+            onBreak={onBreak}
             />
           <div className="row g-0">
           <LengthControls 

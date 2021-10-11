@@ -4,7 +4,7 @@ import { faPlusCircle, faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 const LengthControls = (props) => {
 
-    const { title, idTitle, idDecrement, idIncrement, idLength, changeTime, type, time, formatTime } = props;
+    const { title, idTitle, idDecrement, idIncrement, idLength, changeTime, type, time } = props;
 
     return (
         <div className="col-6 row g-0 align-content-center">

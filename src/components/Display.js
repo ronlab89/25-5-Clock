@@ -4,13 +4,12 @@ import { faPlay, faPause, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 
 const Display = (props) => {
     console.log(props);
-    console.log(props.time(25*60));
     
-    const {reset, time, timeDisplay, play, ifBreak} = props;
+    const {reset, time, timeDisplay, play, onBreak} = props;
 
     return (
         <div>
-            <div id="timer-label" className="col-12">{ifBreak ? "Break" : "Session"}</div>
+            <h2 id="timer-label" className="col-12">{onBreak ? "Break" : "Session"}</h2>
             <div id="time-left" className="col-12">{time(timeDisplay)}</div>
             <div className="col-12">
                 <div className="row g-0 control mt-4">
