@@ -6,7 +6,7 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import Logo from './assets/images/logo.png';
 import Display from './components/Display';
 import LengthControls from './components/LengthControls';
-import audio from './assets/audio/beep.mp3';
+import audio from './assets/audio/beep2.mp3';
 
 
 const {useState} = React;
@@ -15,7 +15,7 @@ function App() {
 
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timeDisplay, setTimeDisplay] = useState(25 * 60);
+  const [timeDisplay, setTimeDisplay] = useState(1500);
   const [timerOn, setTimerOn] = useState(false);
   const [onBreak, setOnBreak] = useState(false);
   const [audioBreak, setAudioBreak] = useState(new Audio(audio));
@@ -89,7 +89,7 @@ function App() {
           });
           nextDate += second;
         }
-      }, 30);
+      }, 1000);
       localStorage.clear();
       localStorage.setItem('interval-id', interval);
     }
@@ -100,7 +100,7 @@ function App() {
   }
 
   const onReset = () => {
-    setTimeDisplay(25 * 60);
+    setTimeDisplay(1500);
     setBreakLength(5);
     setSessionLength(25);
     if (playTime()) {
