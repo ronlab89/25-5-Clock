@@ -6,7 +6,6 @@ import 'bootstrap/dist/js/bootstrap.bundle';
 import Logo from './assets/images/logo.png';
 import Display from './components/Display';
 import LengthControls from './components/LengthControls';
-import audio from './assets/audio/beep2.mp3';
 
 
 const {useState} = React;
@@ -15,13 +14,13 @@ function App() {
 
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timeDisplay, setTimeDisplay] = useState(1500);
+  const [timeDisplay, setTimeDisplay] = useState(25 * 60);
   const [timerOn, setTimerOn] = useState(false);
   const [onBreak, setOnBreak] = useState(false);
-  const [audioBreak, setAudioBreak] = useState(new Audio(audio));
+  const [audioBreak, setAudioBreak] = useState(new Audio('https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav'));
 
   const playAudioBreak = () => {
-    setAudioBreak(new Audio(audio));
+    setAudioBreak(new Audio('https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav'));
     audioBreak.currentTime = 0;
     audioBreak.play();
   }
@@ -72,19 +71,23 @@ function App() {
         date = new Date().getTime();
         if(date > nextDate) {
           setTimeDisplay(prev => {
+
             if(prev <= 0 && !onBreakVar) {
               playAudioBreak();
               setOnBreak(true);
               onBreakVar = true;
-              return breakLength * 60;
+              console.log(breakLength);
+              return breakLength;
             }
-            if(prev <= 0 && onBreakVar) {
+
+            if (prev <= 0 && onBreakVar) {
               playAudioBreak();
               setOnBreak(false);
               onBreakVar = false;
+              console.log(sessionLength);
               return sessionLength * 60;
             }
-            
+           
             return prev - 1;
           });
           nextDate += second;
@@ -124,6 +127,7 @@ function App() {
             time={timerClock}
             play={playTime}
             onBreak={onBreak}
+            audioBreak={audioBreak}
             />
           <div className="row g-0">
           <LengthControls 

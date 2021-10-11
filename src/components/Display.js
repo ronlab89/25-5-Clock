@@ -5,7 +5,7 @@ import { faPlay, faPause, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 const Display = (props) => {
     console.log(props);
     
-    const {reset, time, timeDisplay, play, onBreak} = props;
+    const {reset, time, timeDisplay, play, onBreak, audioBreak} = props;
 
     return (
         <div>
@@ -26,6 +26,7 @@ const Display = (props) => {
                     </button>
                 </div>
             </div>
+            <audio id="beep" preload="auto" src={audioBreak} />
         </div>
     );
 }
